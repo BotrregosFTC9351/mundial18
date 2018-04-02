@@ -27,14 +27,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.team9351;
+package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;
 
 /**
  * This OpMode uses the common HardwareK9bot class to define the devices on the robot.
@@ -59,15 +55,12 @@ public class OmniDrive extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareOmni   robot           = new HardwareOmni();              // Use a K9'shardware
+    HardwareCosas hws = new HardwareCosas();
 
     @Override
     public void runOpMode() {
-        double left;
-        double right;
-        double drive;
-        double turn;
-
         robot.init(hardwareMap);
+        hws.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Good", "Luck Koke");    //
@@ -78,16 +71,65 @@ public class OmniDrive extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            Mecanum( gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            Mecanum(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+
+            if (gamepad2.right_bumper){
+                hws.CA.setPower(-1);
+            } else if (gamepad2.left_bumper){
+                hws.CA.setPower(1);
+            } else {
+                hws.CA.setPower(0);
+            }
+
+            if (gamepad2.a){
+                hws.CE.setPower(1);
+            } else if (gamepad2.y){
+                hws.CE.setPower(-1);
+            } else {
+                hws.CE.setPower(0);
+            }
+
+            if (gamepad1.right_bumper){
+                hws.RH.setPosition(0);
+            } else if (gamepad1.left_bumper){
+                hws.RH.setPosition(1);
+            }
+            telemetry.addData("RH: %f",hws.RH.getPosition());    //
+
+            if (gamepad1.y){
+                hws.RM.setPosition(0);
+            } else if (gamepad1.a){
+                hws.RM.setPosition(1);
+            }
+            telemetry.addData("RM: %f", hws.RM.getPosition());    //
+
+            if (gamepad1.x){
+                hws.PC.setPower(1);
+            } else if (gamepad1.b){
+                hws.PC.setPower(-1);
+            } else {
+                hws.PC.setPower(0);
+            }
+
+            if (gamepad2.dpad_up){
+                hws.JW.setPosition(0);
+            } else if (gamepad2.dpad_down){
+                hws.JW.setPosition(1);
+            }
+            telemetry.addData("JW: %f", hws.JW.getPosition());    //
+
+
             telemetry.update();
+
         }
+
     }
     public void Mecanum (double x, double y, double rotation){
         double wheelSpeeds[] = new double[4];
 
-        wheelSpeeds[0] = -x + y - rotation;
+        wheelSpeeds[0] = x + y - rotation;
         wheelSpeeds[1] = -x + y + rotation;
-        wheelSpeeds[2] = x + y - rotation;
+        wheelSpeeds[2] = -x + y - rotation;
         wheelSpeeds[3] = x + y + rotation;
 
         robot.normalize(wheelSpeeds);

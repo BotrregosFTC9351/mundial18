@@ -27,10 +27,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.team9351;
+package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -49,21 +53,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class HardwareOmni
+public class Hardwares
 {
     /* Public OpMode members. */
-    public DcMotor  frontLeft   = null;
-    public DcMotor  frontRight  = null;
-    public DcMotor  backLeft   = null;
-    public DcMotor  backRight  = null;
+    public NormalizedColorSensor colorSensor = null;
+    public NormalizedRGBA colors = null;
+    public float[] hsvValues = new float[3];
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwareOmni(){
-
+    public Hardwares(){
     }
 
     /* Initialize standard Hardware interfaces */
@@ -71,51 +73,8 @@ public class HardwareOmni
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        // Define and Initialize Motors
-        frontLeft  = hwMap.get(DcMotor.class, "FL");
-        frontRight = hwMap.get(DcMotor.class, "FR");
-        backLeft  = hwMap.get(DcMotor.class, "BL");
-        backRight = hwMap.get(DcMotor.class, "BR");
-
-        frontLeft.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        frontRight.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        backLeft.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        backRight.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-
-        // Set all motors to zero power
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
-
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
-        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    }
-    public void normalize(double[] wheelSpeeds)
-    {
-        double maxMagnitude = Math.abs(wheelSpeeds[0]);
-
-        for (int i = 1; i < wheelSpeeds.length; i++)
-        {
-            double magnitude = Math.abs(wheelSpeeds[i]);
-
-            if (magnitude > maxMagnitude)
-            {
-                maxMagnitude = magnitude;
-            }
-        }
-
-        if (maxMagnitude > 1.0)
-        {
-            for (int i = 0; i < wheelSpeeds.length; i++)
-            {
-                wheelSpeeds[i] /= maxMagnitude;
-            }
-        }
+        colorSensor = hwMap.get(NormalizedColorSensor.class, "colorSensor");
+        colors = colorSensor.getNormalizedColors();
     }
 }
 
