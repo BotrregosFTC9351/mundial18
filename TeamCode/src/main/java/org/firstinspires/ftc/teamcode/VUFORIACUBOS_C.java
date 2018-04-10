@@ -75,6 +75,7 @@ public class VUFORIACUBOS_C extends LinearOpMode {
 
     HardwareOmni         robot   = new HardwareOmni();   // Use a Pushbot's hardware
     HardwareCosas cosas = new HardwareCosas();
+
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: Andymark Motor Encoder
@@ -82,7 +83,7 @@ public class VUFORIACUBOS_C extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.3;
+    static final double     DRIVE_SPEED             = .7;
     static final double     TURN_SPEED              = 0.5;
 
     OpenGLMatrix lastLocation = null;
@@ -189,12 +190,12 @@ public class VUFORIACUBOS_C extends LinearOpMode {
             telemetry.update();
             if (vuMark== RelicRecoveryVuMark.CENTER){
 
-                cerrarCubos(.5);
+                cerrarCubos(-.5);
                 encoderElevador(DRIVE_SPEED, -6, 1.0);
                 encoderDrive(DRIVE_SPEED,  36.5,  36.5, 36.5, 36.5, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                 encoderDrive(DRIVE_SPEED,  20,  -20, 20, -20, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                 encoderElevador(DRIVE_SPEED, 6, 1.0);
-                cerrarCubos(-.5);
+                cerrarCubos(.5);
                 sleep(500);
                 cerrarCubos(0);
                 encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
@@ -203,30 +204,49 @@ public class VUFORIACUBOS_C extends LinearOpMode {
 
             } else if (vuMark== RelicRecoveryVuMark.LEFT){
 
-                cerrarCubos(.5);
+                cerrarCubos(-.5);
                 encoderElevador(DRIVE_SPEED, -6, 1.0);
                 encoderDrive(DRIVE_SPEED,  43,  43, 43, 43, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                 encoderDrive(DRIVE_SPEED,  19,  -19, 19, -19, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                 encoderElevador(DRIVE_SPEED, 6, 1.0);
-                cerrarCubos(-.5);
+                cerrarCubos(.5);
                 sleep(500);
                 cerrarCubos(0);
-                encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED,  -10,  -10, -10, -10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                 sleep(20000);
                 telemetry.addData("Dejar cubo en la izq ", "Funcion del otro autonomo");
 
             } else if (vuMark == RelicRecoveryVuMark.RIGHT) {
 
-                cerrarCubos(.5);
+                cerrarCubos(-.5);
                 encoderElevador(DRIVE_SPEED, -6, 1.0);
-                encoderDrive(DRIVE_SPEED,  30,  30, 30, 30, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(.3,  26.5,  26.5, 26.5, 26.5, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                 encoderDrive(DRIVE_SPEED,  19,  -19, 19, -19, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                 encoderElevador(DRIVE_SPEED, 6, 1.0);
-                cerrarCubos(-.5);
+                cerrarCubos(.5);
                 sleep(500);
                 cerrarCubos(0);
                 encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED,  10,  10, 10, 10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED, -39, 39, -39, 39, 5.2);
+                cerrarCubos(-.2);
+                sleep(50);
+                cerrarCubos(0);
+                encoderDrive(DRIVE_SPEED,  -25,  -25, -25, -25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                cerrarCubos(-1);
+                encoderElevador(DRIVE_SPEED, -6, 1.0);
+                encoderDrive(DRIVE_SPEED, 25, 25, 25, 25, 5.2);
+                encoderDrive(DRIVE_SPEED, -8, 8, 8, -8, 5.2);
+                encoderDrive(DRIVE_SPEED, -38, 38, -38, 38, 5.2);
+                encoderElevador(DRIVE_SPEED, 6, 1.0);
+                cerrarCubos(.5);
+                sleep(500);
+                cerrarCubos(0);
+                encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+
+
                 sleep(20000);
+
                 telemetry.addData("Dejar cubo en la der ", "Funcion del otro autonomo");
             }
         }
@@ -235,12 +255,13 @@ public class VUFORIACUBOS_C extends LinearOpMode {
     String format(OpenGLMatrix transformationMatrix) {
         return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
-
-
-
     public void cerrarCubos (double velocidad){
         cosas.CA.setPower(velocidad);
     }
+
+
+
+
     public void encoderElevador (double speed, int inches, double timeoutS){
         int newTarjet;
         if (opModeIsActive()){
@@ -272,6 +293,9 @@ public class VUFORIACUBOS_C extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
+
+
+
     public void encoderDrive(double speed,
                              double frontLeftInches, double frontRightInches,
                              double backLeftInches, double backRightInches,
@@ -342,4 +366,5 @@ public class VUFORIACUBOS_C extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
+
 }

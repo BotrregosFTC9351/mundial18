@@ -75,6 +75,7 @@ public class VUFORIACUBOS_A extends LinearOpMode {
 
     HardwareOmni         robot   = new HardwareOmni();   // Use a Pushbot's hardware
     HardwareCosas cosas = new HardwareCosas();
+    VUFORIACUBOS_C VFC = new VUFORIACUBOS_C();
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: Andymark Motor Encoder
