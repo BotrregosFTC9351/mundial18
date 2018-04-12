@@ -79,6 +79,8 @@ public class SensorREVColorDistance extends LinearOpMode {
     @Override
     public void runOpMode() {
 
+        HardwareCosas cosas = new HardwareCosas();
+
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
 
@@ -131,6 +133,7 @@ public class SensorREVColorDistance extends LinearOpMode {
                     relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
                 }
             });
+
 
             if(sensorColor.blue()>sensorColor.red()){
                 telemetry.addData("Bai popo roja", "");
