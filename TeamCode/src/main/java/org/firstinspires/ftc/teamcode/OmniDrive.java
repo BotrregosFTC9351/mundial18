@@ -112,12 +112,14 @@ public class OmniDrive extends LinearOpMode {
             }
 
             if (gamepad2.dpad_up){
-                hws.JW.setPosition(0);
+                hws.JW.setPosition(.1);
             } else if (gamepad2.dpad_down){
-                hws.JW.setPosition(1);
+                hws.JW.setPosition(.7);
             }
-            telemetry.addData("JW: %f", hws.JW.getPosition());    //
 
+
+
+            telemetry.addData("JW: %f", hws.JW.getPosition());    //
 
             telemetry.update();
 

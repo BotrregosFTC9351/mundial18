@@ -203,72 +203,71 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                 if(sensorColor.blue()>sensorColor.red()){
                     telemetry.addData("Adelante", "");
                     cerrarCubos(-.7);
+                    sleep(100);
+                    cosas.RH.setPosition(0);
                     encoderElevador(.4, -6, 1.0);
-                    encoderDrive(.2,  -2,  -2, -2, -2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    cosas.JW.setPosition(1);
-                    encoderDrive(.4,  33,  33, 33, 33, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(.2,  -4,  4, -4, 4, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(.2,  4.2,  -4.2, 4.2, -4.2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(.4,  34.2,  34.2, 34.2, 34.2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  19,  -19, 19, -19, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    encoderElevador(DRIVE_SPEED, .5, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
                     encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  10,  10, 10, 10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED, -39, 39, -39, 39, 5.2);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(.2);
-                    sleep(50);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -25,  -25, -25, -25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cerrarCubos(.1);
+                    sleep(30);
+                    encoderDrive(DRIVE_SPEED,  -20,  -20, -20, -20, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     cerrarCubos(-1);
                     encoderElevador(DRIVE_SPEED, -6, 1.0);
-                    encoderDrive(DRIVE_SPEED, 25, 25, 25, 25, 5.2);
-                    encoderDrive(DRIVE_SPEED, -9.5, 9.5, 9.5, -9.5, 5.2);
-                    encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
-                    encoderElevador(DRIVE_SPEED, 5, 1.0);
+                    encoderDrive(DRIVE_SPEED, 20, 20, 20, 20, 5.2);
+                    encoderDrive(DRIVE_SPEED, -9.8, 9.8, 9.8, -9.8, 5.2);
+                    encoderDrive(DRIVE_SPEED, -37, 37, -37, 37, 5.2);
+                    encoderElevador(DRIVE_SPEED, .5, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
                     encoderDrive(DRIVE_SPEED,  -9,  -9, -9, -9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-
-
+                    encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -37.7, 37.7, -37.7, 37.7, 5.2);
+                    encoderDrive(DRIVE_SPEED,  8,  8, 8, 8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
+
                 } else {
                     telemetry.addData("Normal", "");
                     cerrarCubos(-.5);
                     encoderElevador(DRIVE_SPEED, -6, 1.0);
                     encoderDrive(.2,  2,  2, 2, 2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    cosas.JW.setPosition(1);
-                    encoderDrive(.4,  27,  27, 27, 27, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    encoderDrive(.4,  32,  32, 32, 32, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  19,  -19, 19, -19, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    encoderElevador(DRIVE_SPEED, .5, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
                     encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  10,  10, 10, 10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED, -39, 39, -39, 39, 5.2);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(.2);
-                    sleep(50);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -25,  -25, -25, -25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cerrarCubos(.1);
+                    sleep(30);
+                    encoderDrive(DRIVE_SPEED,  -20,  -20, -20, -20, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     cerrarCubos(-1);
                     encoderElevador(DRIVE_SPEED, -6, 1.0);
-                    encoderDrive(DRIVE_SPEED, 25, 25, 25, 25, 5.2);
-                    encoderDrive(DRIVE_SPEED, -9.5, 9.5, 9.5, -9.5, 5.2);
-                    encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
+                    encoderDrive(DRIVE_SPEED, 20, 20, 20, 20, 5.2);
+                    encoderDrive(DRIVE_SPEED, -10.1, 10.1, 10.1, -10.1, 5.2);
+                    encoderDrive(DRIVE_SPEED, -37.3, 37.3, -37.3, 37.3, 5.2);
                     encoderElevador(DRIVE_SPEED, 5, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -9,  -9, -9, -9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -10,  -10, -10, -10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
+                    encoderDrive(DRIVE_SPEED,  9,  9, 9, 9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
                 }
 
@@ -301,77 +300,79 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                 if(sensorColor.blue()>sensorColor.red()){
                     telemetry.addData("Adelante", "");
                     cerrarCubos(-.7);
+                    sleep(100);
+                    cosas.RH.setPosition(0);
                     encoderElevador(.4, -6, 1.0);
-                    encoderDrive(.2,  -2,  -2, -2, -2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    cosas.JW.setPosition(1);
-                    encoderDrive(.4,  35,  35, 35, 35, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(.2,  -4,  4, -4, 4, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(.2,  4.2,  -4.2, 4.2, -4.2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(.4,  41.3,  41.3, 41.3, 41.3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  19,  -19, 19, -19, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    encoderElevador(DRIVE_SPEED, .5, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
                     encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  10,  10, 10, 10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderDrive(DRIVE_SPEED, -39, 39, -39, 39, 5.2);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(.2);
-                    sleep(50);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -25,  -25, -25, -25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -40, 40, -40, 40, 5.2);
+                    cerrarCubos(.1);
+                    sleep(30);
+                    encoderDrive(DRIVE_SPEED,  -20,  -20, -20, -20, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     cerrarCubos(-1);
                     encoderElevador(DRIVE_SPEED, -6, 1.0);
-                    encoderDrive(DRIVE_SPEED, 25, 25, 25, 25, 5.2);
-                    encoderDrive(DRIVE_SPEED, -9.5, 9.5, 9.5, -9.5, 5.2);
+                    encoderDrive(DRIVE_SPEED, 20, 20, 20, 20, 5.2);
+                    encoderDrive(DRIVE_SPEED, 13.4, -13.4, -13.4, 13.4, 5.2);
                     encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
-                    encoderElevador(DRIVE_SPEED, 5, 1.0);
+                    encoderElevador(DRIVE_SPEED, .5, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -9,  -9, -9, -9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-
-
+                    encoderDrive(DRIVE_SPEED,  -12,  -12, -12, -12, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -37.7, 37.7, -37.7, 37.7, 5.2);
+                    encoderDrive(DRIVE_SPEED,  10,  10, 10, 10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
+
                 } else {
                     telemetry.addData("Normal", "");
                     cerrarCubos(-.5);
                     encoderElevador(DRIVE_SPEED, -6, 1.0);
                     encoderDrive(.2,  2,  2, 2, 2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    cosas.JW.setPosition(1);
-                    encoderDrive(.4,  30,  30, 30, 30, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    encoderDrive(.4,  39.3,  39.3, 39.3, 39.3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  19,  -19, 19, -19, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    encoderElevador(DRIVE_SPEED, .5, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
                     encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderDrive(DRIVE_SPEED,  10,  10, 10, 10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderDrive(DRIVE_SPEED, -39, 39, -39, 39, 5.2);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(.2);
-                    sleep(50);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -25,  -25, -25, -25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  9,  9, 9, 9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -38, 38, -38, 38, 5.2);
+                    cerrarCubos(.1);
+                    sleep(30);
+                    encoderDrive(DRIVE_SPEED,  -20,  -20, -20, -20, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     cerrarCubos(-1);
                     encoderElevador(DRIVE_SPEED, -6, 1.0);
-                    encoderDrive(DRIVE_SPEED, 25, 25, 25, 25, 5.2);
-                    encoderDrive(DRIVE_SPEED, -9.5, 9.5, 9.5, -9.5, 5.2);
-                    encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
+                    encoderDrive(DRIVE_SPEED, 20, 20, 20, 20, 5.2);
+                    encoderDrive(DRIVE_SPEED, 13.6, -13.6, -13.6, 13.6, 5.2);
+                    encoderDrive(DRIVE_SPEED, -38.3, 38.3, -38.3, 38.3, 5.2);
                     encoderElevador(DRIVE_SPEED, 5, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -9,  -9, -9, -9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -12,  -12, -12, -12, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
+                    encoderDrive(DRIVE_SPEED,  9,  9, 9, 9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
                 }
 
 
                 telemetry.addData("Dejar cubo en la izq ", "Funcion del otro autonomo");
+
+
+
             } else if (vuMark == RelicRecoveryVuMark.RIGHT) {
                 Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
                         (int) (sensorColor.green() * SCALE_FACTOR),
@@ -397,54 +398,58 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                 });
 
                 if(sensorColor.blue()>sensorColor.red()){
+
                     telemetry.addData("Adelante", "");
                     cerrarCubos(-.7);
+                    sleep(100);
+                    cosas.RH.setPosition(0);
                     encoderElevador(.4, -6, 1.0);
-                    encoderDrive(.2,  -2,  -2, -2, -2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    cosas.JW.setPosition(1);
-                    encoderDrive(.4,  29,  29, 29, 29, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(.2,  -4,  4, -4, 4, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(.2,  4.2,  -4.2, 4.2, -4.2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(.4,  26.5,  26.5, 26.5, 26.5, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  19,  -19, 19, -19, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    encoderElevador(DRIVE_SPEED, 2, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
                     encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  10,  10, 10, 10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderDrive(DRIVE_SPEED, -39, 39, -39, 39, 5.2);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(.2);
-                    sleep(50);
-                    cerrarCubos(-.2);
-                    sleep(50);
-                    cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -25,  -25, -25, -25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -37.7, 37.7, -37.7, 37.7, 5.0);
+                    cerrarCubos(.1);
+                    sleep(30);
+                    encoderDrive(DRIVE_SPEED,  -20,  -20, -20, -20, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     cerrarCubos(-1);
                     encoderElevador(DRIVE_SPEED, -6, 1.0);
-                    encoderDrive(DRIVE_SPEED, 25, 25, 25, 25, 5.2);
-                    encoderDrive(DRIVE_SPEED, -9.5, 9.5, 9.5, -9.5, 5.2);
-                    encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
-                    encoderElevador(DRIVE_SPEED, 5, 1.0);
+                    encoderDrive(DRIVE_SPEED, 17, 17, 17, 17, 5.0);
+                    encoderDrive(DRIVE_SPEED, -8.3, 9.3, 9.3, -8.3  , 5.0);
+                    encoderDrive(DRIVE_SPEED, -37.7, 37.7, -37.7, 37.7, 5.0);
+                    encoderElevador(DRIVE_SPEED, 2, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -9,  -9, -9, -9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-
-
+                    encoderDrive(DRIVE_SPEED,  -12,  -12, -12, -12, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  8,  8, 8, 8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
+                    encoderDrive(DRIVE_SPEED,  9,  9, 9, 9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
+
+
                 } else {
                     telemetry.addData("Normal", "");
                     cerrarCubos(-.5);
+                    cosas.RH.setPosition(0);
                     encoderElevador(DRIVE_SPEED, -6, 1.0);
-                    encoderDrive(.2,  2,  2, 2, 2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    cosas.JW.setPosition(1);
-                    encoderDrive(.4,  24.5,  24.5, 24.5, 24.5, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderDrive(DRIVE_SPEED,  19,  -19, 19, -19, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(.2,  3,  3, 3, 3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    encoderDrive(.4,  23.7,  23.7, 23.7, 23.7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  18.5,  -18.5, 18.5, -18.5, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderElevador(DRIVE_SPEED, 6, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -9,  -9, -9, -9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,  10,  10, 10, 10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED, -39, 39, -39, 39, 5.2);
                     cerrarCubos(-.2);
@@ -454,17 +459,20 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                     cerrarCubos(-.2);
                     sleep(50);
                     cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -25,  -25, -25, -25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -20,  -20, -20, -20, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     cerrarCubos(-1);
                     encoderElevador(DRIVE_SPEED, -6, 1.0);
-                    encoderDrive(DRIVE_SPEED, 25, 25, 25, 25, 5.2);
-                    encoderDrive(DRIVE_SPEED, -9.5, 9.5, 9.5, -9.5, 5.2);
+                    encoderDrive(DRIVE_SPEED, 19, 19, 19, 19, 5.2);
+                    encoderDrive(DRIVE_SPEED, -9.3, 10.3, 10.3, -9.3, 5.2);
                     encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
                     encoderElevador(DRIVE_SPEED, 5, 1.0);
                     cerrarCubos(.5);
                     sleep(500);
                     cerrarCubos(0);
-                    encoderDrive(DRIVE_SPEED,  -9,  -9, -9, -9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -10,  -10, -10, -10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
+                    encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
                 }
 
@@ -484,7 +492,7 @@ public class VUFORIACUBOS_C extends LinearOpMode {
 
 
 
-    public void encoderElevador (double speed, int inches, double timeoutS){
+    public void encoderElevador (double speed, double inches, double timeoutS){
         int newTarjet;
         if (opModeIsActive()){
             newTarjet = cosas.CE.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);

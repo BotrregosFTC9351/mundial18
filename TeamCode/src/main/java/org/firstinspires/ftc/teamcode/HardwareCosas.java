@@ -102,11 +102,9 @@ public class HardwareCosas
         JW  = hwMap.get(Servo.class, "JW");
         RH = hwMap.get(Servo.class, "RH");
         RM = hwMap.get(Servo.class, "RM");
-        JW.setPosition(1);
-        RH.setPosition(0);
+        JW.setPosition(.7);
+        RH.setPosition(1);
         RM.setPosition(1);
-
-
     }
  }
 
