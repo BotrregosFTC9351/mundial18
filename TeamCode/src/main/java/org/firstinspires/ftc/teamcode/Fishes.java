@@ -110,6 +110,7 @@ import java.util.Locale;
 **In the real program the pushers wouldn't be used,but from this test we are only testing the logic of the code
 */
 @Autonomous(name = "Fishes", group = "Sensor")
+@Disabled
 public class Fishes extends LinearOpMode {
 
     // Declare Opmode members.
