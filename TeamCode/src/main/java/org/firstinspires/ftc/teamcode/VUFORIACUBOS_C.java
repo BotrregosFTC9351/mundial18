@@ -235,6 +235,7 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                     encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED, -37.7, 37.7, -37.7, 37.7, 5.2);
                     encoderDrive(DRIVE_SPEED,  8,  8, 8, 8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
 
                 } else {
@@ -268,6 +269,7 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                     encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
                     encoderDrive(DRIVE_SPEED,  9,  9, 9, 9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
                 }
 
@@ -332,6 +334,7 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                     encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED, -37.7, 37.7, -37.7, 37.7, 5.2);
                     encoderDrive(DRIVE_SPEED,  10,  10, 10, 10, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
 
                 } else {
@@ -365,6 +368,7 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                     encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
                     encoderDrive(DRIVE_SPEED,  9,  9, 9, 9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
                 }
 
@@ -433,6 +437,7 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                     encoderDrive(DRIVE_SPEED,  8,  8, 8, 8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
                     encoderDrive(DRIVE_SPEED,  9,  9, 9, 9, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
 
 
@@ -473,6 +478,7 @@ public class VUFORIACUBOS_C extends LinearOpMode {
                     encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED, -37.5, 37.5, -37.5, 37.5, 5.2);
                     encoderDrive(DRIVE_SPEED,  7,  7, 7, 7, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
                     sleep(20000);
                 }
 

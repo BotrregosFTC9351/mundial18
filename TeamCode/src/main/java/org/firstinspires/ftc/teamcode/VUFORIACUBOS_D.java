@@ -28,53 +28,41 @@
  */
 package org.firstinspires.ftc.teamcode;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-/**
- * This OpMode illustrates the basics of using the Vuforia engine to determine
- * the identity of Vuforia VuMarks encountered on the field. The code is structured as
- * a LinearOpMode. It shares much structure with {@link ConceptVuforiaNavigation}; we do not here
- * duplicate the core Vuforia documentation found there, but rather instead focus on the
- * differences between the use of Vuforia for navigation vs VuMark identification.
- *
- * @see ConceptVuforiaNavigation
- * @see VuforiaLocalizer
- * @see VuforiaTrackableDefaultListener
- * see  ftc_app/doc/tutorial/FTC_FieldCoordinateSystemDefinition.pdf
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- *
- * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
- * is explained in {@link ConceptVuforiaNavigation}.
- */
+import java.util.Locale;
 
 @Autonomous(name="VUFORIACUBOS-D", group ="Concept")
-//@Disabled
 public class VUFORIACUBOS_D extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";
 
     HardwareOmni         robot   = new HardwareOmni();   // Use a Pushbot's hardware
     HardwareCosas cosas = new HardwareCosas();
+
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: Andymark Motor Encoder
@@ -82,15 +70,14 @@ public class VUFORIACUBOS_D extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.3;
+    static final double     DRIVE_SPEED             = .7;
     static final double     TURN_SPEED              = 0.5;
 
     OpenGLMatrix lastLocation = null;
 
-    /**
-     * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
-     * localization engine.
-     */
+    ColorSensor sensorColor;
+    DistanceSensor sensorDistance;
+
     VuforiaLocalizer vuforia;
 
     @Override public void runOpMode() {
@@ -104,12 +91,6 @@ public class VUFORIACUBOS_D extends LinearOpMode {
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
-        /**
-         * Load the data set containing the VuMarks for Relic Recovery. There's only one trackable
-         * in this data set: all three of the VuMarks in the game were created from this one template,
-         * but differ in their instance id information.
-         * @see VuMarkInstanceId
-         */
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
@@ -121,7 +102,6 @@ public class VUFORIACUBOS_D extends LinearOpMode {
         robot.init(hardwareMap);
         cosas.init(hardwareMap);
 
-        // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
@@ -137,30 +117,39 @@ public class VUFORIACUBOS_D extends LinearOpMode {
         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         cosas.CE.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0", "Starting at FL:%7d FR:%7d BL:%7d BR:%7d",
                 robot.frontLeft.getCurrentPosition(),
                 robot.frontRight.getCurrentPosition(),
                 robot.backLeft.getCurrentPosition(),
                 robot.backRight.getCurrentPosition());
-        telemetry.update();
 
+        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
+
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+
+        float hsvValues[] = {0F, 0F, 0F};
+        final float values[] = hsvValues;
+        final double SCALE_FACTOR = 255;
+
+
+        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+
+        telemetry.update();
 
         waitForStart();
 
         relicTrackables.activate();
 
+        cosas.JW.setPosition(0);
+        sleep (1000);
+
+
         while (opModeIsActive()) {
-
-            /**
-             * See if any of the instances of {@link relicTemplate} are currently visible.
-             * {@link RelicRecoveryVuMark} is an enum which can have the following values:
-             * UNKNOWN, LEFT, CENTER, and RIGHT. When a VuMark is visible, something other than
-             * UNKNOWN will be returned by {@link RelicRecoveryVuMark#from(VuforiaTrackable)}.
-             */
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 
+
+            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 
                 telemetry.addData("VuMark", "%s visible", vuMark);
 
@@ -171,12 +160,10 @@ public class VUFORIACUBOS_D extends LinearOpMode {
                     VectorF trans = pose.getTranslation();
                     Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
-                    // Extract the X, Y, and Z components of the offset of the target relative to the robot
                     double tX = trans.get(0);
                     double tY = trans.get(1);
                     double tZ = trans.get(2);
 
-                    // Extract the rotational components of the target relative to the robot
                     double rX = rot.firstAngle;
                     double rY = rot.secondAngle;
                     double rZ = rot.thirdAngle;
@@ -188,55 +175,237 @@ public class VUFORIACUBOS_D extends LinearOpMode {
 
             telemetry.update();
             if (vuMark== RelicRecoveryVuMark.CENTER){
+                Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                        (int) (sensorColor.green() * SCALE_FACTOR),
+                        (int) (sensorColor.blue() * SCALE_FACTOR),
+                        hsvValues);
 
-                cerrarCubos(.5);
-                encoderElevador(DRIVE_SPEED, -6, 1.0);
-                encoderDrive(DRIVE_SPEED,  25,  25, 25, 25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -18,  18, -18, 18, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -8,  -8, -8, -8, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -18,  18, -18, 18, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderElevador(DRIVE_SPEED, 6, 1.0);
-                cerrarCubos(-.5);
-                sleep(500);
-                cerrarCubos(0);
-                encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                sleep(20000);
+                // send the info back to driver station using telemetry function.
+                telemetry.addData("Distance (cm)",
+                        String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+                telemetry.addData("Alpha", sensorColor.alpha());
+                telemetry.addData("Red  ", sensorColor.red());
+                telemetry.addData("Green", sensorColor.green());
+                telemetry.addData("Blue ", sensorColor.blue());
+                telemetry.addData("Hue", hsvValues[0]);
 
-                telemetry.addData("Dejar cubo en el centro ", "Funcion del otro autonomo");
+                // change the background color to match the color detected by the RGB sensor.
+                // pass a reference to the hue, saturation, and value array as an argument
+                // to the HSVToColor method.
+                relativeLayout.post(new Runnable() {
+                    public void run() {
+                        relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+                    }
+                });
 
-            } else if (vuMark== RelicRecoveryVuMark.LEFT){
-                cerrarCubos(.5);
-                encoderElevador(DRIVE_SPEED, -6, 1.0);
-                encoderDrive(DRIVE_SPEED,  25,  25, 25, 25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -18,  18, -18, 18, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -15,  -15, -15, -15, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -18,  18, -18, 18, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderElevador(DRIVE_SPEED, 6, 1.0);
-                cerrarCubos(-.5);
-                sleep(500);
-                cerrarCubos(0);
-                encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                sleep(20000);
+                if(sensorColor.blue()<sensorColor.red()){
+                    telemetry.addData("Normal", "");
+                    cerrarCubos(-.5);
+                    sleep(100);
+                    cosas.RH.setPosition(0);
+                    encoderElevador(DRIVE_SPEED, -6, 1.0);
+                    encoderDrive(DRIVE_SPEED,  25,  25, 25, 25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(DRIVE_SPEED,  -18,  18, -18, 18, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -12,  -12, -12, -12, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -18,  18, -18, 18, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    cerrarCubos(.5);
+                    sleep(500);
+                    cerrarCubos(0);
+                    encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  6,  6, 6, 6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -36,  36, -36, 36, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  2,  2, 2, 2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    sleep(20000);
 
-                telemetry.addData("Dejar cubo en la izq ", "Funcion del otro autonomo");
+                } else {
 
-            } else if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                cerrarCubos(.5);
-                encoderElevador(DRIVE_SPEED, -6, 1.0);
-                encoderDrive(DRIVE_SPEED,  25,  25, 25, 25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  3,  3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -36,  36, -36, 36, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderElevador(DRIVE_SPEED, 6, 1.0);
-                cerrarCubos(-.5);
-                sleep(500);
-                cerrarCubos(0);
-                encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
-                sleep(20000);
+                    telemetry.addData("Adelante", "");
+                    cerrarCubos(-.7);
+                    sleep(100);
+                    cosas.RH.setPosition(0);
+                    encoderElevador(.4, -6, 1.0);
+                    encoderDrive(.2,  -4,  4, -4, 4, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(.2,  4,  -4, 4, -4, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  22,  22, 22, 22, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -18,  18, -18, 18, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -12,  -12, -12, -12  , 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -17.5,  17.5, -17.5, 17.5, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    cerrarCubos(.5);
+                    sleep(500);
+                    cerrarCubos(0);
+                    encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  6,  6, 6, 6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -36,  36, -36, 36, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  2,  2, 2, 2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    sleep(20000);
+
+
+                }
+
 
                 telemetry.addData("Dejar cubo en la der ", "Funcion del otro autonomo");
+
+
+            } else if (vuMark== RelicRecoveryVuMark.RIGHT){
+                Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                        (int) (sensorColor.green() * SCALE_FACTOR),
+                        (int) (sensorColor.blue() * SCALE_FACTOR),
+                        hsvValues);
+
+                // send the info back to driver station using telemetry function.
+                telemetry.addData("Distance (cm)",
+                        String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+                telemetry.addData("Alpha", sensorColor.alpha());
+                telemetry.addData("Red  ", sensorColor.red());
+                telemetry.addData("Green", sensorColor.green());
+                telemetry.addData("Blue ", sensorColor.blue());
+                telemetry.addData("Hue", hsvValues[0]);
+
+                // change the background color to match the color detected by the RGB sensor.
+                // pass a reference to the hue, saturation, and value array as an argument
+                // to the HSVToColor method.
+                relativeLayout.post(new Runnable() {
+                    public void run() {
+                        relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+                    }
+                });
+
+                if(sensorColor.blue()<sensorColor.red()){
+                    telemetry.addData("Adelante", "");
+                    cerrarCubos(-.7);
+                    sleep(100);
+                    cosas.RH.setPosition(0);
+                    encoderElevador(.4, -6, 1.0);
+                    encoderDrive(.2,  4,  -4, 4, -4, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(.2,  -4,  4, -4, 4, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  25,  25, 25, 25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -6,  6, 6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -35,  35, -35, 35, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    cerrarCubos(.5);
+                    sleep(500);
+                    cerrarCubos(0);
+                    encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  6,  6, 6, 6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -36,  36, -36, 36, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  2,  2, 2, 2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    sleep(20000);
+
+                } else {
+                    telemetry.addData("Normal", "");
+                    cerrarCubos(-.5);
+                    encoderElevador(DRIVE_SPEED, -6, 1.0);
+                    encoderDrive(DRIVE_SPEED,  25,  25, 25, 25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(DRIVE_SPEED,  -6,  6, 6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -35,  35, -35, 35, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    cerrarCubos(.5);
+                    sleep(500);
+                    cerrarCubos(0);
+                    encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  6,  6, 6, 6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -36,  36, -36, 36, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  2,  2, 2, 2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    sleep(20000);
+
+
+                }
+
+
+                telemetry.addData("Dejar cubo en la RIGHT ", "Funcion del otro autonomo");
+
+
+
+            } else if (vuMark == RelicRecoveryVuMark.LEFT) {
+                Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                        (int) (sensorColor.green() * SCALE_FACTOR),
+                        (int) (sensorColor.blue() * SCALE_FACTOR),
+                        hsvValues);
+
+                // send the info back to driver station using telemetry function.
+                telemetry.addData("Distance (cm)",
+                        String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+                telemetry.addData("Alpha", sensorColor.alpha());
+                telemetry.addData("Red  ", sensorColor.red());
+                telemetry.addData("Green", sensorColor.green());
+                telemetry.addData("Blue ", sensorColor.blue());
+                telemetry.addData("Hue", hsvValues[0]);
+
+                // change the background color to match the color detected by the RGB sensor.
+                // pass a reference to the hue, saturation, and value array as an argument
+                // to the HSVToColor method.
+                relativeLayout.post(new Runnable() {
+                    public void run() {
+                        relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+                    }
+                });
+
+                if(sensorColor.blue()>sensorColor.red()){
+                    telemetry.addData("Normal", "");
+                    cerrarCubos(-.5);
+                    encoderElevador(DRIVE_SPEED, -6, 1.0);
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(DRIVE_SPEED,  25,  25, 25, 25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(DRIVE_SPEED,  -21,  21, -21, 21, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -17,  -17, -17, -17, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  18,  -18, 18, -18, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    cerrarCubos(.5);
+                    sleep(500);
+                    cerrarCubos(0);
+                    encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  6,  6, 6, 6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -36,  36, -36, 36, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  2,  2, 2, 2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    sleep(20000);
+
+                } else {
+                    telemetry.addData("Adelante", "");
+                    cerrarCubos(-.7);
+                    sleep(100);
+                    cosas.RH.setPosition(0);
+                    encoderElevador(.4, -6, 1.0);
+                    encoderDrive(.2,  4,  -4, 4, -4, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    cosas.JW.setPosition(.7);
+                    sleep(100);
+                    encoderDrive(.2,  -4,  4, -4, 4, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -25,  -25, -25, -25, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -18,  18, -18, 18, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -21,  -21, -21, -21, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  17.5,  -17.5, 17.5, -17.5, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -3,  -3, -3, -3, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderElevador(DRIVE_SPEED, 6, 1.0);
+                    cerrarCubos(.5);
+                    sleep(500);
+                    cerrarCubos(0);
+                    encoderDrive(DRIVE_SPEED,  -6,  -6, -6, -6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  6,  6, 6, 6, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  -36,  36, -36, 36, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  2,  2, 2, 2, 5.0 );  // S1: Forward 47 Inches with 5 Sec timeout
+                    sleep(20000);
+
+                }
+
+
+                telemetry.addData("Dejar cubo en la LEFT ", "Funcion del otro autonomo");
             }
         }
     }
@@ -244,13 +413,14 @@ public class VUFORIACUBOS_D extends LinearOpMode {
     String format(OpenGLMatrix transformationMatrix) {
         return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
-
-
-
     public void cerrarCubos (double velocidad){
         cosas.CA.setPower(velocidad);
     }
-    public void encoderElevador (double speed, int inches, double timeoutS){
+
+
+
+
+    public void encoderElevador (double speed, double inches, double timeoutS){
         int newTarjet;
         if (opModeIsActive()){
             newTarjet = cosas.CE.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
@@ -281,6 +451,9 @@ public class VUFORIACUBOS_D extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
+
+
+
     public void encoderDrive(double speed,
                              double frontLeftInches, double frontRightInches,
                              double backLeftInches, double backRightInches,
@@ -348,8 +521,8 @@ public class VUFORIACUBOS_D extends LinearOpMode {
             robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
             //  sleep(250);   // optional pause after each move
         }
     }
+
 }

@@ -92,7 +92,7 @@ public class OmniDrive extends LinearOpMode {
             if (gamepad1.right_bumper){
                 hws.RH.setPosition(0);
             } else if (gamepad1.left_bumper){
-                hws.RH.setPosition(1);
+                hws.RH.setPosition(.9);
             }
             telemetry.addData("RH: %f",hws.RH.getPosition());    //
 
