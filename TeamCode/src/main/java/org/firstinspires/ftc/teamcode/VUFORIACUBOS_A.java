@@ -298,7 +298,6 @@ public class VUFORIACUBOS_A extends LinearOpMode {
                         relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
                     }
                 });
-
                 if(sensorColor.blue()<sensorColor.red()){
                     telemetry.addData("Normal", "");
                     cerrarCubos(-.5);
